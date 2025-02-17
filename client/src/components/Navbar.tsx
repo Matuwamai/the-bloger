@@ -1,27 +1,64 @@
-import React from 'react'
-// import Logo from '../assets/blog1.jpg'
-
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 export const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <div className='m-5 border-solid flex justify-center items-center border-2 bg-gray-100 border-blue-400 rounded-sm p-2 gap-84'>
-      <span className='flex place-content-start items-center gap-1'>
-        <img src="/myLogo.svg" alt="logo" className='h-20 w-20 rounded-full object-cover bg-blue-400' />
-        <h2 className='text-3xl font-bold text-blue-600'>The Bloger</h2>
-      </span>
-      <section className='flex justify-center items-center gap-2'>
-        <ul className='flex gap-1 justify-center items-center text-blue-600 font-bold text-md'>
-          <li className=''>Science</li>
-          <li className=''>Technology</li>
-          <li className=''>Education</li>
-          <li className=''>Business</li>
-          <li className=''>Fashion</li>
-          <li className=''>Entertainment</li>
-          <li className=''>Politics</li>
-        </ul>
-        <button className='bg-blue-500 py-1 px-8 rounded-md font-sm hover:bg-blue-700 cursor-pointer text-white'>Log Out</button>
-        <button className='bg-blue-500  h-20 w-20 rounded-full font-sm hover:bg-blue-600 cursor-pointer text-white font-bold text-1xl'>Write</button>
-      </section>
-    </div>
-  )
-}
+    <>
+      {/* Navbar Container */}
+      <div className='fixed top-0 left-0 w-full bg-gray-100 border-b-2 border-blue-400 shadow-md '>
+        <div className='m-5 flex justify-between items-center p-4'>
+          {/* Logo & Site Name */}
+          <span className='flex items-center gap-2'>
+            <img 
+              src='/myLogo.svg' 
+              alt='logo' 
+              className='h-16 w-16 md:h-20 md:w-20 rounded-full object-cover bg-blue-400' 
+            />
+            <h2 className='text-2xl md:text-3xl font-bold text-red  -600'>The Bloger</h2>
+          </span>
+
+          {/* Menu Button (Only Visible on Small Screens) */}
+          <button 
+            className='md:hidden bg-blue-500 text-white p-2 rounded-md' 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </button>
+
+          {/* Normal Menu for Large Screens */}
+          <nav className='hidden md:flex gap-4 items-center text-blue-600 font-bold'>
+            <Link to="/?cat=science">Science</Link>
+            <Link to="/?cat=technology">Technology</Link>
+            <Link to="/?cat=education">Education</Link>
+            <Link to="/?cat=business">Business</Link>
+            <Link to="/?cat=fashion">Fashion</Link>
+            <Link to="/?cat=entertainment">Entertainment</Link>
+            <Link to="/?cat=politics">Politics</Link>
+            <Link to="/?cat=art">Art</Link>
+            <button className='bg-blue-500 py-1 px-4 md:px-8 rounded-md hover:bg-blue-700 text-white'>Log Out</button>
+            <button className='bg-blue-500 h-12 w-12 md:h-16 md:w-16 rounded-full text-white font-bold text-lg hover:bg-blue-600'>Write</button>
+          </nav>
+        </div>
+      </div>
+
+      {/* Slide-in Menu for Small Screens */}
+      {isMenuOpen && (
+        <div className='fixed top-20 left-0 w-2/5 bg-gray-100 shadow-md p-4 flex flex-col items-center text-blue-600 font-bold mt-2 gap-2 md:hidden'>
+          <Link to="/?cat=science" onClick={() => setIsMenuOpen(false)}>Science</Link>
+          <Link to="/?cat=technology" onClick={() => setIsMenuOpen(false)}>Technology</Link>
+          <Link to="/?cat=education" onClick={() => setIsMenuOpen(false)}>Education</Link>
+          <Link to="/?cat=business" onClick={() => setIsMenuOpen(false)}>Business</Link>
+          <Link to="/?cat=fashion" onClick={() => setIsMenuOpen(false)}>Fashion</Link>
+          <Link to="/?cat=entertainment" onClick={() => setIsMenuOpen(false)}>Entertainment</Link>
+          <Link to="/?cat=politics" onClick={() => setIsMenuOpen(false)}>Politics</Link>
+          <Link to="/?cat=art" onClick={() => setIsMenuOpen(false)}>Art</Link>
+          <button className='bg-blue-500 py-1 px-1 rounded-md hover:bg-blue-700 text-white' onClick={() => setIsMenuOpen(false)}>Log Out</button>
+          <button className='bg-blue-500 h-12 w-12 rounded-full text-white font-semibold text-md hover:bg-blue-600' onClick={() => setIsMenuOpen(false)}>Write</button>
+        </div>
+      )}
+    </>
+  );
+};
