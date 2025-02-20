@@ -1,64 +1,97 @@
-import React from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import axios from 'axios'
+import React, { useState } from "react";
+import { useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Authcontext } from "../context/authContex";
 
 const Register = () => {
   const [inputs, setInputs] = useState({
-    username:"",
-    email:"",
-    password:""
-  })
+    username: "",
+    email: "",
+    password: "",
+  });
+
   const [err, setError] = useState(null);
+  const navigate = useNavigate();
+  const { register } = useContext(Authcontext);
 
-  const navigate =useNavigate();
-  const handleChange = e =>{
-    setInputs(prev=>({...prev, [e.target.name]: e.target.value}))
-  }
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-  
-  const handleSubmit = async e =>{
-  e.preventDefault()
-  try{  
-  const res = await  axios.post("http://localhost:5000/api/auth/register", inputs)
-  navigate("/login")
-  }catch(err){
-    setError(err.response.data)
-  }
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await register(inputs);
+      navigate("/");
+    } catch (err) {
+      setError(err.response.data);
+    }
+  };
+
   return (
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-blue-400 to-blue-600 px-4">
+      <form className="w-full max-w-md bg-blue-100 shadow-lg rounded-lg p-6 md:p-6">
+        <h2 className="text-2xl font-bold text-blue-600 text-center mb-4">
+          Create an Account
+        </h2>
 
-    <div className='bg-blue-400 h-svh flex justify-center items center'>
-        <form action="submit" className=' flex flex-col bg-blue-100 rounded-md m-5 w-2/5  md:w-4/5 h-relative items-center justify-center m-auto p-4 '>
-            <h2 className='text-xl text-blue-600 font-bold'>Create Account</h2>
-            <span  className='flex flex-col'>
-                <label htmlFor="email" className=''>Email</label>
-                <input type="email" placeholder='johndoe@gmail.com' name='email' onChange={handleChange} className='p-1 mb-2 outline-2 outline-solid focus: outline-blue-300 focus:outline-bg-500 rounded-xs'  />
-            </span>
-            <span  className='flex flex-col' >
-                <label htmlFor="email" className=''>User Name</label>
-                <input type="text" placeholder='JohnDoe'  name='username' onChange={handleChange} className='p-1 mb-2 outline-solid outline-blue-300  outline-2 focus:outline-bg-500 rounded-xs'  />
-            </span>
-            <span className='flex flex-col'>
-                <label htmlFor="password">Password</label>
-                <input type="password" placeholder='**********'  name='password' onChange={handleChange} className='p-1 mb-2  outline-solid outline-2 outline-blue-300 focus:outline-bg-500 rounded-xs' />
-            </span>
-            <span className='flex flex-col'>
-                <label htmlFor="password"> Confirm Password</label>
-                <input type="password" placeholder='**********'  name='password' onChange={handleChange} className='p-1 mb-2  otline-solid outline-2 outline-blue-300  focus:outline-bg-500 rounded-xs' />
-            </span>
-            <button onClick={handleSubmit} className='bg-blue-600 py-1 px-8 rounded-md font-sm hover:bg-blue-700 cursor-pointer text-blue-100'>Register</button>
-            {err && <p className='text-red-600'>{err}</p>}
-            <section className="flex gap-1 text-blue-600">
-              <p>Already have an account?</p>
-              <NavLink to="/login" className="underline ">
-                <p>Login</p>
-              </NavLink>
-            </section>
+        <div className="mb-4">
+          <label htmlFor="username" className="block text-gray-700 font-semibold">
+            Username
+          </label>
+          <input
+            name="username"
+            onChange={handleChange}
+            type="text"
+            placeholder="JohnDoe"
+            className="w-full mt-2  p-2   border rounded-sm focus:border-none focus:outline-1 focus:outline-blue-400"
+          />
+        </div>
 
-        </form>
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-gray-700 font-semibold">
+            Email
+          </label>
+          <input
+            name="email"
+            onChange={handleChange}
+            type="email"
+            placeholder="johndoe@gmail.com"
+            className="w-full mt-1 p-2 border rounded-sm focus:border-none focus:outline-1 focus:outline-blue-400"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-gray-700 font-semibold">
+            Password
+          </label>
+          <input
+            name="password"
+            onChange={handleChange}
+            type="password"
+            placeholder="**********"
+            className="w-full mt-1 p-2 border rounded-sm focus:border-none focus:outline-1 focus:outline-blue-500"
+          />
+        </div>
+
+        {err && <p className="text-red-500 text-center mb-3">{err}</p>}
+
+        <button
+          onClick={handleSubmit}
+          className="w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition-all"
+        >
+          Register
+        </button>
+
+        <p className="text-center text-gray-700 mt-4">
+          Already have an account?{" "}
+          <NavLink to="/login" className="text-blue-600 font-semibold hover:underline">
+            Login
+          </NavLink>
+        </p>
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;
