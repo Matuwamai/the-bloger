@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { Authcontext } from '../context/authContex';
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const{currentUser, logout} = useContext(Authcontext);
 
   return (
     <>
@@ -38,7 +40,8 @@ export const Navbar = () => {
             <Link to="/?cat=entertainment">Entertainment</Link>
             <Link to="/?cat=politics">Politics</Link>
             <Link to="/?cat=art">Art</Link>
-            <button className='bg-blue-500 py-1 px-4 md:px-8 rounded-md hover:bg-blue-700 text-white'>Log Out</button>
+            <span>{currentUser?.username}</span>
+            {currentUser ?<span onClick={logout} className='bg-blue-500 py-1 px-4 md:px-8 rounded-md hover:bg-blue-700 text-white'>Log Out</span>: <Link to={"/login"} >Login</Link >}
             <button className='bg-blue-500 h-12 w-12 md:h-16 md:w-16 rounded-full text-white font-bold text-lg hover:bg-blue-600'>Write</button>
           </nav>
         </div>
@@ -46,7 +49,7 @@ export const Navbar = () => {
 
       {/* Slide-in Menu for Small Screens */}
       {isMenuOpen && (
-        <div className='fixed top-20 left-0 w-2/5 bg-gray-100 shadow-md p-4 flex flex-col items-center text-blue-600 font-bold mt-2 gap-2 md:hidden'>
+        <div className='fixed top-20 left-0 w-2/5 bg-gray-100 shadow-md p-4 flex flex-col  text-blue-600 font-bold mt-2 gap-2 md:hidden'>
           <Link to="/?cat=science" onClick={() => setIsMenuOpen(false)}>Science</Link>
           <Link to="/?cat=technology" onClick={() => setIsMenuOpen(false)}>Technology</Link>
           <Link to="/?cat=education" onClick={() => setIsMenuOpen(false)}>Education</Link>
@@ -55,7 +58,8 @@ export const Navbar = () => {
           <Link to="/?cat=entertainment" onClick={() => setIsMenuOpen(false)}>Entertainment</Link>
           <Link to="/?cat=politics" onClick={() => setIsMenuOpen(false)}>Politics</Link>
           <Link to="/?cat=art" onClick={() => setIsMenuOpen(false)}>Art</Link>
-          <button className='bg-blue-500 py-1 px-1 rounded-md hover:bg-blue-700 text-white' onClick={() => setIsMenuOpen(false)}>Log Out</button>
+          <span>{currentUser?.userName}</span>
+          {currentUser ?<span onClick={logout} className='bg-blue-500 py-1 px-1 rounded-md hover:bg-blue-700 text-white' onClick={() => setIsMenuOpen(false)}>Log Out</span>: <Link to={"/login"} >Login</Link >}
           <button className='bg-blue-500 h-12 w-12 rounded-full text-white font-semibold text-md hover:bg-blue-600' onClick={() => setIsMenuOpen(false)}>Write</button>
         </div>
       )}
