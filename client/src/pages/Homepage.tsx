@@ -20,6 +20,8 @@ export const Homepage = () => {
     }
   },[cat]); 
   
+  
+
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-10 mt-40">
       {posts.map((post, index) => (
@@ -29,10 +31,10 @@ export const Homepage = () => {
             index % 2 === 0 ? "md:flex-row-reverse" : "md:flex-row"
           }`}
         >
-          <img src={post.img} alt="Post" className="w-full md:w-2/5 h-64 object-cover rounded-lg shadow-lg" />
+          <img src={`./upload/${post.img}`} alt="Post" className="w-full md:w-2/5 h-64 object-cover rounded-lg shadow-lg" />
           <div className="md:w-3/5 text-center md:text-left">
             <h1 className="text-2xl font-bold text-gray-900">{post.title}</h1>
-            <p className="text-gray-800 mt-2">{post.desc}</p>
+            <p> {getTextpost.desc}</p>
             <Link to={`/post/${post.id}`} className="inline-block mt-4 bg-blue-700 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition">
               Read More
             </Link>

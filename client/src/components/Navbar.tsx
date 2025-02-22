@@ -45,7 +45,7 @@ export const Navbar = () => {
             <Link to="/?cat=art">Art</Link>
             <span>{currentUser?.username}</span>
             {currentUser ?<span onClick={logout} className='bg-blue-500 py-1 px-4 md:px-8 rounded-md hover:bg-blue-700 text-white'>Log Out</span>: <Link to={"/login"} >Login</Link >}
-            <button className='bg-blue-500 h-12 w-12 md:h-16 md:w-16 rounded-full text-white font-bold text-lg hover:bg-blue-600'>Write</button>
+            <Link to="/write" className='bg-blue-500 flex justify-center items-centers h-12 w-12 md:h-16 md:w-16 rounded-full text-white font-bold text-lg hover:bg-blue-600 text-center'>Write</Link>
           </nav>
         </div>
       </div>
@@ -63,7 +63,7 @@ export const Navbar = () => {
           <Link to="/?cat=art" onClick={() => setIsMenuOpen(false)}>Art</Link>
           <span>{currentUser?.userName}</span>
           {currentUser ?<span onClick={logout} className='bg-blue-500 py-1 px-1 rounded-md hover:bg-blue-700 text-white' >Log Out</span>: <Link to={"/login"} >Login</Link >}
-          <button className='bg-blue-500 h-12 w-12 rounded-full text-white font-semibold text-md hover:bg-blue-600' onClick={() => setIsMenuOpen(false)}>Write</button>
+          <Link to="/write" className='bg-blue-500 h-12 w-12 rounded-full text-white font-semibold text-md hover:bg-blue-600' onClick={() => setIsMenuOpen(false)}>Write</Link>
         </div>
       )}
     </>
