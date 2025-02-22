@@ -14,11 +14,14 @@ export const Navbar = () => {
         <div className='m-5 flex justify-between items-center p-4'>
           {/* Logo & Site Name */}
           <span className='flex items-center gap-2'>
+          <Link to='/'>
+
             <img 
               src='/myLogo.svg' 
               alt='logo' 
               className='h-16 w-16 md:h-20 md:w-20 rounded-full object-cover bg-blue-400' 
             />
+            </Link>
             <h2 className='text-2xl md:text-3xl font-bold text-red  -600'>The Bloger</h2>
           </span>
 
@@ -59,7 +62,7 @@ export const Navbar = () => {
           <Link to="/?cat=politics" onClick={() => setIsMenuOpen(false)}>Politics</Link>
           <Link to="/?cat=art" onClick={() => setIsMenuOpen(false)}>Art</Link>
           <span>{currentUser?.userName}</span>
-          {currentUser ?<span onClick={logout} className='bg-blue-500 py-1 px-1 rounded-md hover:bg-blue-700 text-white' onClick={() => setIsMenuOpen(false)}>Log Out</span>: <Link to={"/login"} >Login</Link >}
+          {currentUser ?<span onClick={logout} className='bg-blue-500 py-1 px-1 rounded-md hover:bg-blue-700 text-white' >Log Out</span>: <Link to={"/login"} >Login</Link >}
           <button className='bg-blue-500 h-12 w-12 rounded-full text-white font-semibold text-md hover:bg-blue-600' onClick={() => setIsMenuOpen(false)}>Write</button>
         </div>
       )}

@@ -1,60 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState , useEffect} from "react";
 import axios from "axios";
 
 export const Homepage = () => {
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState<Array<{ id: number; title: string; desc: string; img: string }>>([]);
+
+  const  cat  = useLocation().search
+ 
   useEffect(()=>{
     const fetchData = async () =>{
       try{
-        const res = await  axios.get("http://localhost:5000/api/posts")
+        const res = await  axios.get(`http://localhost:5000/api/posts/${cat}`)
         setPosts(res.data)
       }catch(err){
         console.log(err)
       };
       fetchData();
     }
-  })
-  // const posts = [
-  //   {
-  //     id: 1,
-  //     title: "Ditch the Traditional Lamp Shade With Lost Lighting",
-  //     desc: "Italian designers BrogliatoTraverso have brought to life a minimalist collection of lighting for Mags using their signature design style of subtraction...",
-  //     img: "/1.jpg",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "These crispy air fried Brussels sprouts make an excellent side dish",
-  //     desc: "To go along with whatever you’re making for dinner like veggie burgers, baked chicken, or this could be a fun snack and appetizer...",
-  //     img: "/2.jpg",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Minimalist Interior Design Trends for 2024",
-  //     desc: "Discover the latest trends in minimalist interior design that are shaping modern homes...",
-  //     img: "/3.jpg",
-  //   },
-  //   {
-  //     id: 1,
-  //     title: "Ditch the Traditional Lamp Shade With Lost Lighting",
-  //     desc: "Italian designers BrogliatoTraverso have brought to life a minimalist collection of lighting for Mags using their signature design style of subtraction...",
-  //     img: "/4.jpg",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "These crispy air fried Brussels sprouts make an excellent side dish",
-  //     desc: "To go along with whatever you’re making for dinner like veggie burgers, baked chicken, or this could be a fun snack and appetizer...",
-  //     img: "/5.jpg",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Minimalist Interior Design Trends for 2024",
-  //     desc: "Discover the latest trends in minimalist interior design that are shaping modern homes...",
-  //     img: "/6.jpg",
-  //   },
-  // ];
-
+  },[cat]); 
+  
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-10 mt-40">
       {posts.map((post, index) => (
